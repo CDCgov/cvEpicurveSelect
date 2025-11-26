@@ -1,13 +1,6 @@
 # cvEpicurveSelect Package
 
-## Related documents
-
-* [Open Practices](open_practices.md)
-* [Rules of Behavior](rules_of_behavior.md)
-* [Thanks and Acknowledgements](thanks.md)
-* [Disclaimer](DISCLAIMER.md)
-* [Contribution Notice](CONTRIBUTING.md)
-* [Code of Conduct](code-of-conduct.md)
+*General disclaimer* This repository was created for use by CDC programs to collaborate on public health related projects in support of the CDC mission. GitHub is not hosted by the CDC, but is a third party website used by CDC and its partners to share information and collaborate on software. CDC use of GitHub does not imply an endorsement of any one particular service, product, or enterprise.
 
 ## Overview
 The purpose of this package is to help find a set of areas that look like the epidemic pattern of a target area — for example, when choosing comparison areas to evaluate an intervention or when designing a sentinel surveillance network. Under the hood, it does this efficiently by combining potential control areas in a weighted way that best matches the target area, using a stepwise cross-validation approach. 
