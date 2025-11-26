@@ -1,0 +1,23 @@
+Package: cvEpicurveSelect
+Type: Package
+Title: Selecting Locations with Comparable Historical Epidemics using Cross-Validation 
+Version: 0.1.0
+Author: Carol Y. Liu, Maile B. Thayer, Zachary J. Madewell
+Maintainer: Carol Y. Liu <zlh4@cdc.gov>
+Description: A tool to select control or surveillance locations based on cross-validated performance in reproducing epidemic time series.
+License: MIT
+Encoding: UTF-8
+RoxygenNote: 7.3.2
+Depends: R (>= 3.5.0)
+Imports: Rcpp (>= 1.0.13),
+         tidyverse (>= 2.0.0),
+         stats,
+         nlme
+LinkingTo: Rcpp, RcppArmadillo
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown,
+    ggplot2,
+    tidyverse
+VignetteBuilder: knitr
