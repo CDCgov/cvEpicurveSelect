@@ -1,12 +1,4 @@
-# CDCgov GitHub Organization Open Source Project Template
-
-**Template for clearance: This project serves as a template to aid projects in starting up and moving through clearance procedures. To start, create a new repository and implement the required [open practices](open_practices.md), train on and agree to adhere to the organization's [rules of behavior](rules_of_behavior.md), and [send a request through the create repo form](https://forms.office.com/Pages/ResponsePage.aspx?id=aQjnnNtg_USr6NJ2cHf8j44WSiOI6uNOvdWse4I-C2NUNk43NzMwODJTRzA4NFpCUk1RRU83RTFNVi4u) using language from this template as a Guide.**
-
-**General disclaimer** This repository was created for use by CDC programs to collaborate on public health related projects in support of the [CDC mission](https://www.cdc.gov/about/cdc/#cdc_about_cio_mission-our-mission).  GitHub is not hosted by the CDC, but is a third party website used by CDC and its partners to share information and collaborate on software. CDC use of GitHub does not imply an endorsement of any one particular service, product, or enterprise. 
-
-## Access Request, Repo Creation Request
-
-* [CDC GitHub Open Project Request Form](https://forms.office.com/Pages/ResponsePage.aspx?id=aQjnnNtg_USr6NJ2cHf8j44WSiOI6uNOvdWse4I-C2NUNk43NzMwODJTRzA4NFpCUk1RRU83RTFNVi4u) _[Requires a CDC Office365 login, if you do not have a CDC Office365 please ask a friend who does to submit the request on your behalf. If you're looking for access to the CDCEnt private organization, please use the [GitHub Enterprise Cloud Access Request form](https://forms.office.com/Pages/ResponsePage.aspx?id=aQjnnNtg_USr6NJ2cHf8j44WSiOI6uNOvdWse4I-C2NUQjVJVDlKS1c0SlhQSUxLNVBaOEZCNUczVS4u).]_
+# cvEpicurveSelect Package
 
 ## Related documents
 
@@ -18,9 +10,22 @@
 * [Code of Conduct](code-of-conduct.md)
 
 ## Overview
+The purpose of this package is to help find a set of areas that look like the epidemic pattern of a target area — for example, when choosing comparison areas to evaluate an intervention or when designing a sentinel surveillance network. Under the hood, it does this efficiently by combining potential control areas in a weighted way that best matches the target area, using a stepwise cross-validation approach. 
 
-Describe the purpose of your project. Add additional sections as necessary to help collaborators and potential collaborators understand and use your project.
-  
+Potential use-cases include the following:
+
+* Identify control areas as counterfactuals for evaluating the impact of area-level interventions (e.g. select a group of counties that can best serve as a control for a county implementing a vector-control strategy to estimate the effect).
+* Select surveillance areas representative of epidemic patterns of target surveillance area (ex. select a set of hospitals or clinics as sentinel surveillance areas that best represent a state's epidemic patterns).
+
+For additional details, please see the package vignette. 
+
+## Getting started and installation
+You will need to install the package from GitHub using the `devtools` package. Make sure you have the appropriate versions of`tidyverse` (>= 2.0.0), `Rcpp` (>= 1.0.13) installed as these are required dependencies.  
+
+```r
+install.packages("devtools")
+devtools::install_github("CDCgov/cvEpicurveSelect",force = TRUE,build_vignettes = TRUE)
+```
 ## Public Domain Standard Notice
 This repository constitutes a work of the United States Government and is not
 subject to domestic copyright protection under 17 USC § 105. This repository is in
