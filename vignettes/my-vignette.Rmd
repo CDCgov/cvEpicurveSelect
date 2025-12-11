@@ -155,7 +155,7 @@ Here we specify 200 time steps and four CV schemes where each block is 1 year ea
 
 ```{r}
 # set random seed for reproducibility for the randomly selected starting point of each CV scheme
-set.seed(12345)
+set.seed(8282)
 
 cv_schemes_simp <- make_cv_schemes(tot_ts = 200, n_cv_schemes=4, block_length=1, freq=52)
 unique(cv_schemes_simp[[1]]) #Three block labels of 1 year each
@@ -280,7 +280,7 @@ In practice, we will run many iterations of the algorithm and then select the be
 
 #### Run over many iterations
 ```{r message=F}
-nit <- 5  #Number of iterations
+nit <- 20  #Number of iterations
 n_sel<-5    #Number of municipalities to select
 sel_mat <- matrix(NA,ncol=n_sel,nrow=nit)
 corr2_mat    <- matrix(NA,ncol=n_sel,nrow=nit)
@@ -535,7 +535,7 @@ cf <- summary(fit)$tTable
 cf
 ```
 
-$β_6$ is 71.73 (SE: 907, p-value = 0.94) which can be interpreted as the difference between the change in level in the weighted control (counterfactual) and the target during the post-intervention period. $β_7$ is -0.07 (SE = 0.84, p-value - 0.933) which can be interpretted as the difference between the change in slope in the weighted control and the target during the post-intervention period. We presented a scenario of a hypothetical intervention to demonstrate how to implement an analysis using the selected controls. We do not expect there to be a meaningful change in level or change in slope. These results are in line with our expectations. 
+$β_6$ is `r round(cf[,"Value"]["X_G"],2)` (SE: `r round(cf[,"Std.Error"]["X_G"],2)`, p-value = `r round(cf[,"p-value"]["X_G"],2)`) which can be interpreted as the difference between the change in level in the weighted control (counterfactual) and the target during the post-intervention period. $β_7$ is `r round(cf[,"Value"]["Tint_G"],2)` (SE = `r round(cf[,"Std.Error"]["Tint_G"],2)`, p-value = `r round(cf[,"p-value"]["Tint_G"],2)`) which can be interpretted as the difference between the change in slope in the weighted control and the target during the post-intervention period. We presented a scenario of a hypothetical intervention to demonstrate how to implement an analysis using the selected controls. We do not expect there to be a meaningful change in level or change in slope. These results are in line with our expectations. 
 
 ## Selecting values for parameters
 * We recommend using a minimum of three blocks. With fewer than three blocks, the cross-validation becomes a single train-test split which limits the model's ability to generalize across multiple, potentially distinct temporal phases in the data. 
