@@ -437,14 +437,14 @@ time <- seq_len(Tn)                      #Vector of time steps
 # Construct control over full period
 control_df <- data.frame(Yt=drop(as.matrix(X) %*% w),  #Apply weights to the entire time series which predicts the counterfactual in the post-intervention period
                          T=time,
-                         Xt=ifelse(time<t_int,0,1),
+                         X=ifelse(time<t_int,0,1),
                          G=0)
 
 #Construct the target over full period, in this case denoted as the intervention site
 
 int_df <- data.frame(Yt = y, 
                      T = time,
-                     Xt=ifelse(time<t_int,0,1),
+                     X=ifelse(time<t_int,0,1),
                      G=1)
 
 dat<- bind_rows(control_df,int_df)
@@ -482,23 +482,24 @@ ggplot(dat, aes(x = T, y = Yt, color = as.factor(G))) +
 
 ```
 
-For the CITS, we will be using the method described by @Bernal2018 with the equation below. 
+For the CITS, we will be using a method similar to the one described by @Bernal2018 with the equation below. 
 
 $$
 Y_t = \beta_0 
     + \beta_1 T
     + \beta_2 X
-    + \beta_3 T X
+    + \beta_3 T_{int}
     + \beta_4 G
-    + \beta_5 G T
-    + \beta_6 G X
-    + \beta_7 G X T
+    + \beta_5 T G
+    + \beta_6 X G
+    + \beta_7 T_{int} G
 $$
 Variables:
 
 * $Y_t$: outcome variable at time t
 * $T$:   time since the start of the study
 * $X$:   dummy variable indicating the pre- or post-intervention period
+* $T_{int}$:   dummy variable indicating the pre- or post-intervention period
 * $G$:   dummy variable indicated intervention group of target (G=1) or weighted control (G=0). 
 
 Estimated parameters:
@@ -516,15 +517,16 @@ $β_6$ and $β_7$ are the parameters of interest for the measures of effect.
 
 
 ```{r}
-dat <- dat%>%
-        mutate(T_Xt = T*Xt,
-               G_T  = G*T,
-               G_Xt = G*Xt,
-               G_Xt_T=G*Xt*T)
+
+
+dat <- dat%>% ungroup()%>%
+        mutate(Tint = ifelse(T<t_int,0,(T-t_int)+1), 
+               T_G  =T*G,
+               X_G  =X*G,
+               Tint_G=Tint*G)
 
 fit <- nlme::gls(
-      Yt ~ T +Xt+T_Xt+G+G_T+G_Xt+G_Xt_T,
-      #Yt ~ T +Xt+T_Xt+G+G_T+G_Xt,
+      Yt ~ T +X+Tint+G+T_G+X_G+Tint_G,
       data = dat,
       correlation = nlme::corARMA(p = 1)    #Autoregressive moving average term with, p=1 means one lag of residual effects current residual 
     )
